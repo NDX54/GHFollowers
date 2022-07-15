@@ -7,7 +7,22 @@
 
 import Foundation
 
-struct Follower: Codable {
+struct Follower: Codable, Hashable {
     var login: String
     var avatarUrl: String
 }
+
+/*
+
+ Alternate version of Follower Struct - Converts login to a hashable
+ 
+ struct Follower: Codable, Hashable {
+    var login: String
+    var avatarUrl: String
+ 
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(login)
+  }
+}
+ 
+*/
