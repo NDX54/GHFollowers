@@ -50,6 +50,7 @@ extension UIViewController {
         activityIndicator.startAnimating()
     }
     
+    /// Dismisses the activity indicator when the application successfully loads the data or times out.
     func dismissLoadingView() {
         DispatchQueue.main.async {
             containerView.removeFromSuperview()
@@ -57,6 +58,7 @@ extension UIViewController {
         }
     }
     
+    /// If the GItHub user keyed in does not have followers, this empty state view will fire up.
     func showEmptyStateView(with message: String, in view: UIView) {
         let emptyStateView = GFEmptyStateView(message: message)
         emptyStateView.frame = view.bounds
