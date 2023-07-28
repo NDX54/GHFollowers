@@ -11,7 +11,7 @@ import Foundation
 // Raw values conform to one type
 // Associated values' cases can have different types
 /// Raw value enum containing strings of error messages.
-enum ErrorMessage: String {
+enum GFError: String, Error {
     case invalidUsername = "This username created an invalid request. Please try again."
     case unableToComplete = "Unable to complete your request. Please check your internet connection"
     case invalidResponse = "Invalid response from the server. Please try again."

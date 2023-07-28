@@ -19,7 +19,7 @@ class NetworkManager {
     // and vice versa.*
     // * It is now an optional enum ErrorMessage
     // Network calls get a lot of error handling
-    func getFollowers(for username: String, page: Int, completed: @escaping ([Follower]?, ErrorMessage?) -> Void) {
+    func getFollowers(for username: String, page: Int, completed: @escaping (Result<[Follower], GFError>) -> Void) {
         let endpoint = baseURL + "/users/\(username)/followers?per_page=100&page=\(page)"
         
         // If this returns a valid URL, we're gonna get a URL.
@@ -28,7 +28,7 @@ class NetworkManager {
         // in this closure to our VCs that can present
         // the error.
         guard let url = URL(string: endpoint) else {
-            completed(nil, .invalidUsername)
+            completed(.failure(.invalidUsername))
             return
         }
         
@@ -42,21 +42,21 @@ class NetworkManager {
             // _ means no var name.
             // We just want to check whether it's nil.
             if let _ = error {
-                completed(nil, .unableToComplete)
+                completed(.failure(.unableToComplete))
             }
             
             // This code checks whether the response isn't nil.
             // If it isn't nil, we check whether the response status code is 200 otherwise
             // throw an error.
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completed(nil, .invalidResponse)
+                completed(.failure(.invalidResponse))
                 return
             }
             
             // If this data is good, then we have our data.
             // Otherwise throw an error.
             guard let data = data else {
-                completed(nil, .invalidData)
+                completed(.failure(.invalidData))
                 return
             }
             
@@ -68,10 +68,10 @@ class NetworkManager {
                 // of followers.
                 // We want to create that array from data.
                 let followers = try decoder.decode([Follower].self, from: data)
-                completed(followers, nil)
+                completed(.success(followers))
             } catch {
 //                completed(nil, error.localizedDescription)
-                completed(nil, .invalidData)
+                completed(.failure(.invalidData))
             }
         }
         
