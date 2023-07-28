@@ -19,9 +19,9 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        // Setting the delegate is like saying "Hey. Listen to me."
-        // If it doesn't know who to listen to, it doesn't act on it
-        // This means that UITextFieldDelegate will listen to SearchVC
+        // Setting the delegate is like saying "Hey. Listen to me.".
+        // If it doesn't know who to listen to, it doesn't act on it.
+        // This means that UITextFieldDelegate will listen to SearchVC.
         usernameTextField.delegate = self
         
         configureLogoImageView()
@@ -34,7 +34,7 @@ class SearchVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         // This gets called every time the view will appear
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     // UIView.endEditing causes the view (or one of its embedded text fields) to resign the first responder status.

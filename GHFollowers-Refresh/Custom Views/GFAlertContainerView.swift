@@ -18,6 +18,7 @@ class GFAlertContainerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // Does the view controller NEED to know?
     private func configure() {
         backgroundColor = .systemBackground
         layer.cornerRadius = 16
