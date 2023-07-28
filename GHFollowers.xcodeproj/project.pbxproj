@@ -27,14 +27,14 @@
 		5480414B2A729C230025564D /* GFAlertContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480414A2A729C230025564D /* GFAlertContainerView.swift */; };
 		548041512A72AFD80025564D /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548041502A72AFD80025564D /* Follower.swift */; };
 		548041532A72B2B10025564D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548041522A72B2B10025564D /* User.swift */; };
-		548041552A73318F0025564D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548041542A73318F0025564D /* NetworkManager.swift */; };
 		548041592A7343CA0025564D /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548041582A7343CA0025564D /* ErrorMessage.swift */; };
 		5480415C2A734D3A0025564D /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480415B2A734D3A0025564D /* FollowerCell.swift */; };
 		5480415E2A734DCB0025564D /* GFAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480415D2A734DCB0025564D /* GFAvatarImageView.swift */; };
+		54BD94B92A73E3C00016A145 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BD94B82A73E3BF0016A145 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		548041182A724D780025564D /* GHFollowers-Refresh.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GHFollowers-Refresh.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		548041182A724D780025564D /* GHFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5480411B2A724D780025564D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5480411D2A724D780025564D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		548041242A724D790025564D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -56,10 +56,10 @@
 		5480414A2A729C230025564D /* GFAlertContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAlertContainerView.swift; sourceTree = "<group>"; };
 		548041502A72AFD80025564D /* Follower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 		548041522A72B2B10025564D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		548041542A73318F0025564D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = "GHFollowers-Refresh/Managers/NetworkManager.swift"; sourceTree = SOURCE_ROOT; };
 		548041582A7343CA0025564D /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		5480415B2A734D3A0025564D /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		5480415D2A734DCB0025564D /* GFAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAvatarImageView.swift; sourceTree = "<group>"; };
+		54BD94B82A73E3BF0016A145 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,7 @@
 		5480410F2A724D780025564D = {
 			isa = PBXGroup;
 			children = (
-				5480411A2A724D780025564D /* GHFollowers-Refresh */,
+				5480411A2A724D780025564D /* GHFollowers */,
 				548041292A724D790025564D /* Info.plist */,
 				548041192A724D780025564D /* Products */,
 			);
@@ -85,12 +85,12 @@
 		548041192A724D780025564D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				548041182A724D780025564D /* GHFollowers-Refresh.app */,
+				548041182A724D780025564D /* GHFollowers.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5480411A2A724D780025564D /* GHFollowers-Refresh */ = {
+		5480411A2A724D780025564D /* GHFollowers */ = {
 			isa = PBXGroup;
 			children = (
 				548041572A7343BA0025564D /* Utilities */,
@@ -101,7 +101,7 @@
 				5480414D2A72A8440025564D /* Custom Views */,
 				5480414C2A72A7FD0025564D /* Screens */,
 			);
-			path = "GHFollowers-Refresh";
+			path = GHFollowers;
 			sourceTree = "<group>";
 		};
 		548041432A7292F80025564D /* Extensions */ = {
@@ -163,7 +163,7 @@
 		548041562A733FF80025564D /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				548041542A73318F0025564D /* NetworkManager.swift */,
+				54BD94B82A73E3BF0016A145 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -188,9 +188,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		548041172A724D780025564D /* GHFollowers-Refresh */ = {
+		548041172A724D780025564D /* GHFollowers */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5480412C2A724D790025564D /* Build configuration list for PBXNativeTarget "GHFollowers-Refresh" */;
+			buildConfigurationList = 5480412C2A724D790025564D /* Build configuration list for PBXNativeTarget "GHFollowers" */;
 			buildPhases = (
 				548041142A724D780025564D /* Sources */,
 				548041152A724D780025564D /* Frameworks */,
@@ -200,9 +200,9 @@
 			);
 			dependencies = (
 			);
-			name = "GHFollowers-Refresh";
+			name = GHFollowers;
 			productName = "GHFollowers-Refresh";
-			productReference = 548041182A724D780025564D /* GHFollowers-Refresh.app */;
+			productReference = 548041182A724D780025564D /* GHFollowers.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -220,7 +220,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 548041132A724D780025564D /* Build configuration list for PBXProject "GHFollowers-Refresh" */;
+			buildConfigurationList = 548041132A724D780025564D /* Build configuration list for PBXProject "GHFollowers" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -233,7 +233,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				548041172A724D780025564D /* GHFollowers-Refresh */,
+				548041172A724D780025564D /* GHFollowers */,
 			);
 		};
 /* End PBXProject section */
@@ -255,7 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				548041552A73318F0025564D /* NetworkManager.swift in Sources */,
+				54BD94B92A73E3C00016A145 /* NetworkManager.swift in Sources */,
 				548041362A7279C80025564D /* GFTextField.swift in Sources */,
 				5480415E2A734DCB0025564D /* GFAvatarImageView.swift in Sources */,
 				548041322A726EE90025564D /* FavoritesListVC.swift in Sources */,
@@ -427,7 +427,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gabrielejuangco.GHFollowers-Refresh";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gabrielejuangco.GHFollowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -454,7 +454,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.gabrielejuangco.GHFollowers-Refresh";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gabrielejuangco.GHFollowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -465,7 +465,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		548041132A724D780025564D /* Build configuration list for PBXProject "GHFollowers-Refresh" */ = {
+		548041132A724D780025564D /* Build configuration list for PBXProject "GHFollowers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5480412A2A724D790025564D /* Debug */,
@@ -474,7 +474,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5480412C2A724D790025564D /* Build configuration list for PBXNativeTarget "GHFollowers-Refresh" */ = {
+		5480412C2A724D790025564D /* Build configuration list for PBXNativeTarget "GHFollowers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5480412D2A724D790025564D /* Debug */,
