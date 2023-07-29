@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		541D5B302A7532E9004C838C /* UIEdgeInsets+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D5B2F2A7532E9004C838C /* UIEdgeInsets+Ext.swift */; };
 		5480411C2A724D780025564D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480411B2A724D780025564D /* AppDelegate.swift */; };
 		5480411E2A724D780025564D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480411D2A724D780025564D /* SceneDelegate.swift */; };
 		548041252A724D790025564D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548041242A724D790025564D /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		541D5B2F2A7532E9004C838C /* UIEdgeInsets+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Ext.swift"; sourceTree = "<group>"; };
 		548041182A724D780025564D /* GHFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5480411B2A724D780025564D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5480411D2A724D780025564D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				5480413A2A7292DC0025564D /* UITableView+Ext.swift */,
 				5480413D2A7292DC0025564D /* UIView+Ext.swift */,
 				5480413C2A7292DC0025564D /* UIViewController+Ext.swift */,
+				541D5B2F2A7532E9004C838C /* UIEdgeInsets+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -266,6 +269,7 @@
 				548041452A7295A40025564D /* GFTitleLabel.swift in Sources */,
 				5480413E2A7292DC0025564D /* Date+Ext.swift in Sources */,
 				5480414B2A729C230025564D /* GFAlertContainerView.swift in Sources */,
+				541D5B302A7532E9004C838C /* UIEdgeInsets+Ext.swift in Sources */,
 				548041512A72AFD80025564D /* Follower.swift in Sources */,
 				548041302A726EB60025564D /* SearchVC.swift in Sources */,
 				548041592A7343CA0025564D /* ErrorMessage.swift in Sources */,
