@@ -1,8 +1,8 @@
 //
-//  ErrorMessage.swift
-//  GHFollowers-Refresh
+//  GFError.swift
+//  GHFollowers
 //
-//  Created by Jared Juangco on 28/7/23.
+//  Created by Jared Juangco on 30/7/23.
 //
 
 import Foundation

@@ -14,13 +14,14 @@ class NetworkManager {
     
     private init() {}
     
-    // @escaping is a type attribute that returns something.
+    // @escaping is a type attribute that returns something. If successful, it returns completed(.success(whatever)).
+    // If unsuccessful, it returns completed(.failure(whateverFailure)).
     // Array of followers can return an error since we are not guaranteed followers.
     // Error is also an optional string because if we have an array of followers, we don't have an error
     // and vice versa.*
     // * It is now an optional enum ErrorMessage
     // Network calls get a lot of error handling
-    func getFollowers(for username: String, page: Int, completed: @escaping (Result<[Follower], GFError>) -> Void) {
+    func getFollowers(for username: String, page: Int, completed: @escaping (Result<[Follower], GFError>) -> ()) {
         let endpoint = baseURL + "/users/\(username)/followers?per_page=100&page=\(page)"
         
         // If this returns a valid URL, we're gonna get a URL.
@@ -33,8 +34,7 @@ class NetworkManager {
             return
         }
         
-        // This closure handles the data given, its response, and error should
-        // things go awry.
+        // This closure handles the data given, its response, and error should things go awry.
         // This is the basic native way to do network calls.
         // This is like the long division of doing networking.
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -65,8 +65,7 @@ class NetworkManager {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 // What this says is that we want an array of followers.
-                // We want to decode this, and the type we have is an array
-                // of followers.
+                // We want to decode this, and the type we have is an array of followers.
                 // We want to create that array from data.
                 let followers = try decoder.decode([Follower].self, from: data)
                 completed(.success(followers))
@@ -106,6 +105,60 @@ class NetworkManager {
             self.cache.setObject(image, forKey: cacheKey)
             // Set the image to the main thread.
             DispatchQueue.main.async { completed(image) }
+        }
+        
+        task.resume()
+    }
+    /* ABOUT CLOSURES
+     
+     Closures are either escaping or non-escaping; @escaping closures can outlive their respective functions.
+     Closures are used for asynchronous stuff; they are called in a background thread.
+     By default, closures are non-escaping; it doesn't outlive the function.
+     
+     Our closure can be called after a period of time. In the example of having a bad internet connection, loading the followers can take a while.
+     This is why we need our closures to be escaping – we need it to live longer than the function.
+     When a closure escapes, we have to do something about j
+     
+     */
+    
+    // Repeated coding of network calls are unavoidable.
+    func getUserInfo(for username: String, completed: @escaping (Result<User, GFError>) -> ()) {
+        let endpoint = baseURL + "/users/\(username)"
+        
+        guard let url = URL(string: endpoint) else {
+            completed(.failure(.invalidUsername))
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            
+            if let _ = error {
+                completed(.failure(.unableToComplete))
+            }
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                completed(.failure(.invalidResponse))
+                return
+            }
+            
+            guard let data = data else {
+                completed(.failure(.invalidData))
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                // What this says is that we want a follower.
+                // We want to decode this, and the type we have is a user.
+                // We want to create that user from data.
+                let user = try decoder.decode(User.self, from: data)
+                completed(.success(user))
+            } catch {
+                // We don't want to use the localized description of the error because it is vague for the average user.
+                // completed(nil, error.localizedDescription)
+                completed(.failure(.invalidData))
+            }
         }
         
         task.resume()
