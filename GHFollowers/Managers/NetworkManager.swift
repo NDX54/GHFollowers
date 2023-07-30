@@ -71,11 +71,44 @@ class NetworkManager {
                 let followers = try decoder.decode([Follower].self, from: data)
                 completed(.success(followers))
             } catch {
-//                completed(nil, error.localizedDescription)
+                // We don't want to use the localized description of the error because it is vague for the average user.
+                // completed(nil, error.localizedDescription)
                 completed(.failure(.invalidData))
             }
         }
         
         task.resume()
     }
+    
+    // Same function from GFAvatarImageView. It's just transferred here in NetworkManager.
+    func downloadImage(from urlString: String, completed: @escaping (UIImage) -> ()) {
+        let cacheKey = NSString(string: urlString)
+        
+        if let image = cache.object(forKey: cacheKey) {
+            // Once we have our image, we need to return out of the function
+            // because we don't need to do the network call.
+            // Otherwise if we don't have the image, do the network call below.
+            completed(image)
+            return
+        }
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self else { return }
+            // Our placeholder image conveys the error, hence we don't handle the errors here.
+            guard error == nil else { return }
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
+            guard let data = data else { return }
+            
+            // We can set the image to the cache by using cache.setObject().
+            guard let image = UIImage(data: data) else { return }
+            self.cache.setObject(image, forKey: cacheKey)
+            // Set the image to the main thread.
+            DispatchQueue.main.async { completed(image) }
+        }
+        
+        task.resume()
+    }
+    
 }
