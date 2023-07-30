@@ -10,9 +10,7 @@ import UIKit
 class FollowerListVC: UIViewController {
     
     // Enums are hashable by default.
-    enum Section {
-        case main
-    }
+    enum Section { case main }
     
     var username: String!
     var followers: [Follower] = []
@@ -42,31 +40,19 @@ class FollowerListVC: UIViewController {
     }
     
     func configureCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createThreeColumnFlowLayout())
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIHelper.createThreeColumnFlowLayout(in: view))
         view.addSubview(collectionView)
         collectionView.backgroundColor = .systemBackground
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
     
-    func createThreeColumnFlowLayout() -> UICollectionViewFlowLayout {
-        let width = view.bounds.width
-        let padding: CGFloat = 12
-        let minimumItemSpacing: CGFloat = 10
-        // What this variable is giving us is the full width of screen,
-        // we're subtracting the padding on either side of the screen,
-        // and we're also subtracting the minimum spacing on the left middle
-        // and right middle of the column.
-        let availableWidth = width - (padding * 2) - (minimumItemSpacing * 2)
-        let itemWidth = availableWidth / 3
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = UIEdgeInsets(with: padding)
-        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 40)
-        
-        return flowLayout
-    }
-    
     func getFollowers() {
-        NetworkManager.shared.getFollowers(for: username, page: 1) { result in
+        NetworkManager.shared.getFollowers(for: username, page: 1) { [weak self] result in
+            // [weak self] is a capture list.
+            // Initially, the NetworkManager has a strong reference to the FollowerListVC.
+            // This can make a memory leak, so we use the capture list to make self weak
+            // and have a weak reference to the VC.
+            guard let self = self else { return }
             // Since this code is in a closure, this is running in a background thread.
             // According to a WWDC 2019 video, we can say that self.updateData() is safe to call in a bg thread.
             switch result {
@@ -99,6 +85,8 @@ class FollowerListVC: UIViewController {
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
         // Put this code in the main thread
-        dataSource.apply(snapshot, animatingDifferences: true)
+        DispatchQueue.main.async {
+            self.dataSource.apply(snapshot, animatingDifferences: true)
+        }
     }
 }
