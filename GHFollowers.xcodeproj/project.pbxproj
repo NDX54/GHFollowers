@@ -34,6 +34,10 @@
 		5490222A2A766D98000F18D5 /* GFEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549022292A766D98000F18D5 /* GFEmptyStateView.swift */; };
 		5490222C2A767E87000F18D5 /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5490222B2A767E87000F18D5 /* UserInfoVC.swift */; };
 		5490222E2A768841000F18D5 /* GFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5490222D2A768841000F18D5 /* GFError.swift */; };
+		54BC32772A78EB940016364A /* GFUserInfoHeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BC32762A78EB940016364A /* GFUserInfoHeaderVC.swift */; };
+		54BC32792A78EC2C0016364A /* GFSecondaryTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BC32782A78EC2C0016364A /* GFSecondaryTitleLabel.swift */; };
+		54BC327B2A78F6010016364A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BC327A2A78F6010016364A /* Constants.swift */; };
+		54BC327D2A7930D90016364A /* GFItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BC327C2A7930D90016364A /* GFItemInfoView.swift */; };
 		54BD94B92A73E3C00016A145 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BD94B82A73E3BF0016A145 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +71,10 @@
 		549022292A766D98000F18D5 /* GFEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFEmptyStateView.swift; sourceTree = "<group>"; };
 		5490222B2A767E87000F18D5 /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
 		5490222D2A768841000F18D5 /* GFError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFError.swift; sourceTree = "<group>"; };
+		54BC32762A78EB940016364A /* GFUserInfoHeaderVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFUserInfoHeaderVC.swift; sourceTree = "<group>"; };
+		54BC32782A78EC2C0016364A /* GFSecondaryTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFSecondaryTitleLabel.swift; sourceTree = "<group>"; };
+		54BC327A2A78F6010016364A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		54BC327C2A7930D90016364A /* GFItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFItemInfoView.swift; sourceTree = "<group>"; };
 		54BD94B82A73E3BF0016A145 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +191,7 @@
 			children = (
 				5490222D2A768841000F18D5 /* GFError.swift */,
 				549022212A7627B7000F18D5 /* UIHelper.swift */,
+				54BC327A2A78F6010016364A /* Constants.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -200,6 +209,7 @@
 			children = (
 				5480414A2A729C230025564D /* GFAlertContainerView.swift */,
 				549022292A766D98000F18D5 /* GFEmptyStateView.swift */,
+				54BC327C2A7930D90016364A /* GFItemInfoView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -232,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				548041482A729A020025564D /* GFAlertVC.swift */,
+				54BC32762A78EB940016364A /* GFUserInfoHeaderVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -239,8 +250,9 @@
 		549022282A766D17000F18D5 /* Labels */ = {
 			isa = PBXGroup;
 			children = (
-				548041462A7299310025564D /* GFBodyLabel.swift */,
 				548041442A7295A40025564D /* GFTitleLabel.swift */,
+				54BC32782A78EC2C0016364A /* GFSecondaryTitleLabel.swift */,
+				548041462A7299310025564D /* GFBodyLabel.swift */,
 			);
 			path = Labels;
 			sourceTree = "<group>";
@@ -320,6 +332,7 @@
 				54BD94B92A73E3C00016A145 /* NetworkManager.swift in Sources */,
 				5490222E2A768841000F18D5 /* GFError.swift in Sources */,
 				548041362A7279C80025564D /* GFTextField.swift in Sources */,
+				54BC327B2A78F6010016364A /* Constants.swift in Sources */,
 				5480415E2A734DCB0025564D /* GFAvatarImageView.swift in Sources */,
 				548041322A726EE90025564D /* FavoritesListVC.swift in Sources */,
 				548041342A72748D0025564D /* GFButton.swift in Sources */,
@@ -330,11 +343,14 @@
 				5480413E2A7292DC0025564D /* Date+Ext.swift in Sources */,
 				5480414B2A729C230025564D /* GFAlertContainerView.swift in Sources */,
 				541D5B302A7532E9004C838C /* UIEdgeInsets+Ext.swift in Sources */,
+				54BC32772A78EB940016364A /* GFUserInfoHeaderVC.swift in Sources */,
 				548041512A72AFD80025564D /* Follower.swift in Sources */,
 				548041302A726EB60025564D /* SearchVC.swift in Sources */,
 				548041382A728EDC0025564D /* FollowerListVC.swift in Sources */,
 				5480415C2A734D3A0025564D /* FollowerCell.swift in Sources */,
 				548041422A7292DC0025564D /* UIView+Ext.swift in Sources */,
+				54BC327D2A7930D90016364A /* GFItemInfoView.swift in Sources */,
+				54BC32792A78EC2C0016364A /* GFSecondaryTitleLabel.swift in Sources */,
 				5480411C2A724D780025564D /* AppDelegate.swift in Sources */,
 				548041532A72B2B10025564D /* User.swift in Sources */,
 				548041472A7299310025564D /* GFBodyLabel.swift in Sources */,
@@ -479,7 +495,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ALJM345NTC;
+				DEVELOPMENT_TEAM = 4TZN8YVHRL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -491,7 +507,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gabrielejuangco.GHFollowers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaredjuangco.GHFollowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -506,7 +522,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = ALJM345NTC;
+				DEVELOPMENT_TEAM = 4TZN8YVHRL;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -518,7 +534,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gabrielejuangco.GHFollowers;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jaredjuangco.GHFollowers;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
