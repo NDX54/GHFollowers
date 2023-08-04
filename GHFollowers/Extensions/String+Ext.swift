@@ -33,12 +33,13 @@ extension String {
     func convertToDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale = Locale(identifier: "en_AU")
         dateFormatter.timeZone = .current
         
         return dateFormatter.date(from: self)
     }
     
+    // If this messes up, you would want to return an N/A or something similar
     func convertToDisplayFormat() -> String {
         guard let date = self.convertToDate() else { return "N/A" }
         

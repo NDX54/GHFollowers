@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum ItemInfoType {
+    case repos, gists, followers, following
+}
+
 class GFItemInfoView: UIView {
     
     let symbolImageView = UIImageView()
@@ -15,7 +19,7 @@ class GFItemInfoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        configure()
     }
     
     required init?(coder: NSCoder) {
@@ -26,8 +30,52 @@ class GFItemInfoView: UIView {
         addSubview(symbolImageView)
         addSubview(titleLabel)
         addSubview(countLabel)
+        
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.contentMode = .scaleAspectFill
+        symbolImageView.tintColor = .label
+        
+        NSLayoutConstraint.activate([
+            symbolImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            symbolImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            symbolImageView.widthAnchor.constraint(equalToConstant: 20),
+            symbolImageView.heightAnchor.constraint(equalToConstant: 20),
+            
+            titleLabel.centerYAnchor.constraint(equalTo: symbolImageView.centerYAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: symbolImageView.trailingAnchor, constant: 12),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 18),
+            
+            countLabel.topAnchor.constraint(equalTo: symbolImageView.bottomAnchor, constant: 4),
+            countLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            countLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            countLabel.heightAnchor.constraint(equalToConstant: 18)
+        ])
+    }
+    
+    // Based on what we set, we're going to set whatever SFSymbol and the appropriate title
+    func set(itemInfoType: ItemInfoType, withCount count: Int) {
+        switch itemInfoType {
+        case .repos:
+            symbolImageView.image = UIImage(systemName: SFSymbols.repos)
+            titleLabel.text = "Public Repos"
+            break
+        case .gists:
+            symbolImageView.image = UIImage(systemName: SFSymbols.gist)
+            titleLabel.text = "Public Gists"
+            break
+        case .followers:
+            symbolImageView.image = UIImage(systemName: SFSymbols.followers)
+            titleLabel.text = "Followers"
+            break
+        case .following:
+            symbolImageView.image = UIImage(systemName: SFSymbols.following)
+            titleLabel.text = "Following"
+            break
+        }
+        
+        // Count is going to be whatever we passed in so it doesn't have to be inside the switch statement.
+        countLabel.text = String(count)
     }
     
 }

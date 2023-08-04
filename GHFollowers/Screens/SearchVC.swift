@@ -23,6 +23,8 @@ class SearchVC: UIViewController {
         // If it doesn't know who to listen to, it doesn't act on it.
         // This means that UITextFieldDelegate will listen to SearchVC.
         usernameTextField.delegate = self
+        // For debugging purposes.
+        usernameTextField.text = "SAllen0400"
         
         configureLogoImageView()
         configureTextField()

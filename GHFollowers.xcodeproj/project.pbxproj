@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		541D5B302A7532E9004C838C /* UIEdgeInsets+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 541D5B2F2A7532E9004C838C /* UIEdgeInsets+Ext.swift */; };
+		5451216F2A7C72150023BA6C /* GFItemInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451216E2A7C72150023BA6C /* GFItemInfoVC.swift */; };
+		545121712A7C772B0023BA6C /* GFRepoItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545121702A7C772B0023BA6C /* GFRepoItemVC.swift */; };
+		545121732A7C7B8A0023BA6C /* GFFollowerItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545121722A7C7B8A0023BA6C /* GFFollowerItemVC.swift */; };
 		5480411C2A724D780025564D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480411B2A724D780025564D /* AppDelegate.swift */; };
 		5480411E2A724D780025564D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5480411D2A724D780025564D /* SceneDelegate.swift */; };
 		548041252A724D790025564D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 548041242A724D790025564D /* Assets.xcassets */; };
@@ -43,6 +46,9 @@
 
 /* Begin PBXFileReference section */
 		541D5B2F2A7532E9004C838C /* UIEdgeInsets+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIEdgeInsets+Ext.swift"; sourceTree = "<group>"; };
+		5451216E2A7C72150023BA6C /* GFItemInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFItemInfoVC.swift; sourceTree = "<group>"; };
+		545121702A7C772B0023BA6C /* GFRepoItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFRepoItemVC.swift; sourceTree = "<group>"; };
+		545121722A7C7B8A0023BA6C /* GFFollowerItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFFollowerItemVC.swift; sourceTree = "<group>"; };
 		548041182A724D780025564D /* GHFollowers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GHFollowers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5480411B2A724D780025564D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5480411D2A724D780025564D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +95,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		545121742A7C7BE70023BA6C /* ItemInfoVCs */ = {
+			isa = PBXGroup;
+			children = (
+				5451216E2A7C72150023BA6C /* GFItemInfoVC.swift */,
+				545121702A7C772B0023BA6C /* GFRepoItemVC.swift */,
+				545121722A7C7B8A0023BA6C /* GFFollowerItemVC.swift */,
+			);
+			path = ItemInfoVCs;
+			sourceTree = "<group>";
+		};
 		5480410F2A724D780025564D = {
 			isa = PBXGroup;
 			children = (
@@ -241,6 +257,7 @@
 		549022272A766CF4000F18D5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				545121742A7C7BE70023BA6C /* ItemInfoVCs */,
 				548041482A729A020025564D /* GFAlertVC.swift */,
 				54BC32762A78EB940016364A /* GFUserInfoHeaderVC.swift */,
 			);
@@ -332,6 +349,7 @@
 				54BD94B92A73E3C00016A145 /* NetworkManager.swift in Sources */,
 				5490222E2A768841000F18D5 /* GFError.swift in Sources */,
 				548041362A7279C80025564D /* GFTextField.swift in Sources */,
+				5451216F2A7C72150023BA6C /* GFItemInfoVC.swift in Sources */,
 				54BC327B2A78F6010016364A /* Constants.swift in Sources */,
 				5480415E2A734DCB0025564D /* GFAvatarImageView.swift in Sources */,
 				548041322A726EE90025564D /* FavoritesListVC.swift in Sources */,
@@ -355,6 +373,8 @@
 				548041532A72B2B10025564D /* User.swift in Sources */,
 				548041472A7299310025564D /* GFBodyLabel.swift in Sources */,
 				548041402A7292DC0025564D /* String+Ext.swift in Sources */,
+				545121732A7C7B8A0023BA6C /* GFFollowerItemVC.swift in Sources */,
+				545121712A7C772B0023BA6C /* GFRepoItemVC.swift in Sources */,
 				5480411E2A724D780025564D /* SceneDelegate.swift in Sources */,
 				549022222A7627B7000F18D5 /* UIHelper.swift in Sources */,
 			);
