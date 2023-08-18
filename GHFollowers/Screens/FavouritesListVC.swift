@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FavouritesListVC: UIViewController {
+class FavouritesListVC: GFDataLoadingVC {
     
     let tableView = UITableView()
     var favourites: [Follower] = []
@@ -85,9 +85,7 @@ extension FavouritesListVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let favourite = favourites[indexPath.row]
-        let destVC = FollowerListVC()
-        destVC.username = favourite.login
-        destVC.title = favourite.login
+        let destVC = FollowerListVC(username: favourite.login)
         
         // push: navController
         // presenting: showing controller modally

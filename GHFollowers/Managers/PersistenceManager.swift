@@ -20,7 +20,7 @@ enum PersistenceManager {
     }
     
     // When adding or removing, we can get errors because the data can get improperly encoded.
-    static func updateWith(favourite: Follower, actionType: PersistenceActionType, completed: @escaping (GFError?) -> Void) {
+    static func updateWith(favourite: Follower, actionType: PersistenceActionType, completed: @escaping (GFError?) -> ()) {
         retrieveFavourites { result in
             switch result {
             case .success(var favourites):
@@ -51,7 +51,7 @@ enum PersistenceManager {
     // Anytime you're saving a custom object to UserDefaults, it has to be encoded/decoded.
     // It gets saved as data.
     // If we're saving something basic like an Int, Boolean, UD could hold it no problem.
-    static func retrieveFavourites(completed: @escaping (Result<[Follower], GFError>) -> Void) {
+    static func retrieveFavourites(completed: @escaping (Result<[Follower], GFError>) -> ()) {
         // We don't want to return an error here because it might be a first time use.
         guard let favouritesData = defaults.object(forKey: Keys.favourites) as? Data else {
             // Instead of giving an array of followers, we'll be giving back an empty array.

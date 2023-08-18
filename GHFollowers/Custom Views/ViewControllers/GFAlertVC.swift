@@ -21,6 +21,7 @@ class GFAlertVC: UIViewController {
     let padding: CGFloat = 20
     
     init(title: String, message: String, buttonTitle: String) {
+        // This super.init is a designated initialiser for a UIViewController.
         super.init(nibName: nil, bundle: nil)
         self.alertTitle = title
         self.message = message
@@ -33,7 +34,7 @@ class GFAlertVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.75)
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
         configureContainerView()
         configureTitleLabel()
         configureActionButton()
@@ -43,7 +44,6 @@ class GFAlertVC: UIViewController {
     
     func configureContainerView() {
         view.addSubview(containerView)
-        
         
         NSLayoutConstraint.activate([
             containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),

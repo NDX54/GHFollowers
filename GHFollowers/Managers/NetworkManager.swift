@@ -91,17 +91,21 @@ class NetworkManager {
             return
         }
         
-        guard let url = URL(string: urlString) else { return }
+        guard let url = URL(string: urlString) else {
+            
+            return
+        }
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-            guard let self = self else { return }
-            // Our placeholder image conveys the error, hence we don't handle the errors here.
-            guard error == nil else { return }
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else { return }
-            guard let data = data else { return }
             
+            // Our placeholder image conveys the error, hence we don't handle the errors here.
             // We can set the image to the cache by using cache.setObject().
-            guard let image = UIImage(data: data) else { return }
+            guard let self = self,
+                  error == nil,
+                  let response = response as? HTTPURLResponse, response.statusCode == 200,
+                  let data = data,
+                  let image = UIImage(data: data) else { return }
+            
             self.cache.setObject(image, forKey: cacheKey)
             // Set the image to the main thread.
             DispatchQueue.main.async { completed(image) }
@@ -149,6 +153,7 @@ class NetworkManager {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
+                decoder.dateDecodingStrategy = .iso8601
                 // What this says is that we want a follower.
                 // We want to decode this, and the type we have is a user.
                 // We want to create that user from data.

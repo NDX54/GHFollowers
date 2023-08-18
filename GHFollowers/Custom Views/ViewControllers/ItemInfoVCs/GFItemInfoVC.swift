@@ -19,7 +19,8 @@ class GFItemInfoVC: UIViewController {
     var user: User!
     weak var delegate: UserInfoVCDelegate!
     
-    
+    // This is a custom init, but we don't have to use convenience init because
+    // we don't have a function to call in multiple places.
     init(user: User) {
         super.init(nibName: nil, bundle: nil)
         self.user = user

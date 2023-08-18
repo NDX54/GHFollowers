@@ -9,6 +9,7 @@ import UIKit
 
 class GFTitleLabel: UILabel {
     
+    // This is a designated initialiser.
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -18,11 +19,13 @@ class GFTitleLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
-        super.init(frame: .zero)
+    // convenience inits have to call designated initialisers.
+    // This means that we don't have to call configure() here because it calls the designated initialiser above.
+    // Designated initialisers are what is required from the objects.
+    convenience init(textAlignment: NSTextAlignment, fontSize: CGFloat) {
+        self.init(frame: .zero)
         self.textAlignment = textAlignment
         self.font = UIFont.systemFont(ofSize: fontSize, weight: .bold)
-        configure()
     }
     
     private func configure() {
