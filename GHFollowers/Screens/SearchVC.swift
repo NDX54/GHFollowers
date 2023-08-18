@@ -20,12 +20,13 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        view.addSubviews(logoImageView, usernameTextField, callToActionButton)
         // Setting the delegate is like saying "Hey. Listen to me.".
         // If it doesn't know who to listen to, it doesn't act on it.
         // This means that UITextFieldDelegate will listen to SearchVC.
         usernameTextField.delegate = self
         // For debugging purposes.
-//        usernameTextField.text = "SAllen0400"
+        //  usernameTextField.text = "SAllen0400"
         
         configureLogoImageView()
         configureTextField()
@@ -61,7 +62,6 @@ class SearchVC: UIViewController {
     }
     
     func configureLogoImageView() {
-        view.addSubview(logoImageView)
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.image = Images.ghlogo
         
@@ -85,7 +85,6 @@ class SearchVC: UIViewController {
     }
     
     func configureTextField() {
-        view.addSubview(usernameTextField)
         // What the constraints mean:
         // topAnchor constraint pins usernameTextField below logoImageView (logoImageView.bottomAnchor).
         // leadingAnchor constraint pins usernameTextField to the left of the view (view.leadingAnchor).
@@ -100,7 +99,6 @@ class SearchVC: UIViewController {
     }
     
     func configureCallToActionButton() {
-        view.addSubview(callToActionButton)
         callToActionButton.addTarget(self, action: #selector(pushFollowerListVC), for: .touchUpInside)
         
         // On trailing and bottom anchors, you must use a negative constant.

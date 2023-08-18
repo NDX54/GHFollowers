@@ -73,7 +73,7 @@ enum PersistenceManager {
         }
     }
     
-    // Saving - Encoding
+    // Saving = Encoding
     // Retrieving = Decoding
     static func save(favourites: [Follower]) -> GFError? {
         do {

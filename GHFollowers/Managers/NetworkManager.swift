@@ -91,10 +91,7 @@ class NetworkManager {
             return
         }
         
-        guard let url = URL(string: urlString) else {
-            
-            return
-        }
+        guard let url = URL(string: urlString) else { return }
         
         let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
             
@@ -121,7 +118,7 @@ class NetworkManager {
      
      Our closure can be called after a period of time. In the example of having a bad internet connection, loading the followers can take a while.
      This is why we need our closures to be escaping – we need it to live longer than the function.
-     When a closure escapes, we have to do something about j
+     When a closure escapes, we have to do something about it.
      
      */
     

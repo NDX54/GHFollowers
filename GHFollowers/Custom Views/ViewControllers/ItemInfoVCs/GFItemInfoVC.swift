@@ -6,6 +6,13 @@
 //
 
 import UIKit
+// class is deprecated. Use AnyObject instead.
+// Ideally in programming, when shooting for optimal code, you dont want things to know about things that they dont know/shouldn't know about.
+// Breaking down this delegate is a better idea.
+//protocol ItemInfoVCDelegate: AnyObject {
+//    func didTapGitHubProfile(for user: User)
+//    func didTapGetFollowers(for user: User)
+//}
 
 class GFItemInfoVC: UIViewController {
     
@@ -17,7 +24,6 @@ class GFItemInfoVC: UIViewController {
     let actionButton = GFButton()
     
     var user: User!
-    weak var delegate: UserInfoVCDelegate!
     
     // This is a custom init, but we don't have to use convenience init because
     // we don't have a function to call in multiple places.
@@ -64,8 +70,7 @@ class GFItemInfoVC: UIViewController {
     private func layoutUI() {
         // The item info views will be added to the stackview, so we don't have to constrain those.
         // The constraints will happen in the stackview.
-        view.addSubview(stackView)
-        view.addSubview(actionButton)
+        view.addSubviews(stackView, actionButton)
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
         let padding: CGFloat = 20

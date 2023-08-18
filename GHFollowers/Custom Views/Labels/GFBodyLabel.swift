@@ -27,6 +27,7 @@ class GFBodyLabel: UILabel {
     private func configure() {
         textColor = .secondaryLabel
         font = UIFont.preferredFont(forTextStyle: .body)
+        adjustsFontForContentSizeCategory = true
         adjustsFontSizeToFitWidth = true
         // We can tell how much the label will shrink by the minimumScaleFactor variable.
         minimumScaleFactor = 0.75
