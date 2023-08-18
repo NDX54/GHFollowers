@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FollowerListVCDelegate: AnyObject {
+    func didRequestFollowers(for username: String)
+}
+
 class FollowerListVC: UIViewController {
     
     // Enums are hashable by default.
@@ -43,6 +47,9 @@ class FollowerListVC: UIViewController {
     func configureViewController() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        navigationItem.rightBarButtonItem = addButton
     }
     
     func configureSearchController() {
@@ -113,6 +120,36 @@ class FollowerListVC: UIViewController {
             self.dataSource.apply(snapshot, animatingDifferences: true)
         }
     }
+    
+    @objc func addButtonTapped() {
+        showLoadingView()
+        
+        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
+            guard let self = self else { return }
+            self.dismissLoadingView()
+            
+            switch result {
+            case .success(let user):
+                let favourite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+                
+                PersistenceManager.updateWith(favourite: favourite, actionType: .add) { [weak self] error in
+                    guard let self = self else { return }
+                    guard let error = error else {
+                        // If error is nil, do this...
+                        self.presentGFAlertOnMainThread(title: "Success!", message: "You have successfully favourited this user. 🥳", buttonTitle: "Hooray!")
+                        return
+                    }
+                    
+                    self.presentGFAlertOnMainThread(title: "User already in favourites", message: error.rawValue, buttonTitle: "Hehe")
+                }
+                
+                break
+            case .failure(let error):
+                self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "OK")
+                break
+            }
+        }
+    }
 }
 
 
@@ -143,6 +180,7 @@ extension FollowerListVC: UICollectionViewDelegate {
         
         let destVC = UserInfoVC()
         destVC.username = follower.login
+        destVC.delegate = self // The FollowerListVC is now listening to the UserInfoVC.
         let navController = UINavigationController(rootViewController: destVC)
         present(navController, animated: true)
     }
@@ -165,4 +203,21 @@ extension FollowerListVC: UISearchResultsUpdating, UISearchBarDelegate {
         isSearching = false
         updateData(on: followers)
     }
+}
+
+// The FollowerListVC is waiting for somebody (a view controller) to invoke the specified functions below.
+// The FollowerListVC is ready to listen; it doesn't know whose gonna tell what to do yet.
+// The UserInfoVC is going to tell what the FollowerListVC is going to do.
+extension FollowerListVC: FollowerListVCDelegate {
+    
+    func didRequestFollowers(for username: String) {
+        self.username = username
+        title = username
+        page = 1
+        followers.removeAll()
+        filteredFollowers.removeAll()
+        collectionView.setContentOffset(.zero, animated: true)
+        getFollowers(username: username, page: page)
+    }
+
 }

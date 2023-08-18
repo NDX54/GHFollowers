@@ -9,15 +9,15 @@ import UIKit
 
 class GFItemInfoVC: UIViewController {
     
+    // We're not going to initialise this with the parameters set in because this is our superclass.
+    // This holds all the common stuff.
     let stackView = UIStackView()
     let itemInfoViewOne = GFItemInfoView()
     let itemInfoViewTwo = GFItemInfoView()
-    // We're not going to initialise this with the parameters set in because this is our superclass.
-    // This holds all the common stuff.
     let actionButton = GFButton()
     
     var user: User!
-    var delegate: UserInfoVCDelegate!
+    weak var delegate: UserInfoVCDelegate!
     
     
     init(user: User) {
