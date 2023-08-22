@@ -8,11 +8,7 @@
 import UIKit
 // class is deprecated. Use AnyObject instead.
 // Ideally in programming, when shooting for optimal code, you dont want things to know about things that they dont know/shouldn't know about.
-// Breaking down this delegate is a better idea.
-//protocol ItemInfoVCDelegate: AnyObject {
-//    func didTapGitHubProfile(for user: User)
-//    func didTapGetFollowers(for user: User)
-//}
+// Breaking down a delegate is a better idea.
 
 class GFItemInfoVC: UIViewController {
     

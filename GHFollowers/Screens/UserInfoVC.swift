@@ -15,12 +15,13 @@ class UserInfoVC: GFDataLoadingVC {
     
     let scrollView = UIScrollView()
     let contentView = UIView()
-    
     let headerView = UIView()
     let itemViewOne = UIView()
     let itemViewTwo = UIView()
-    let dateLabel = GFBodyLabel(textAlignment: .center)
     var itemViews: [UIView] = []
+    
+    let addUserToFavButton = GFButton(color: .systemPink, title: "Favourite This User", systemImageName: "heart")
+    let dateLabel = GFBodyLabel(textAlignment: .center)
     
     var username: String!
     weak var delegate: UserInfoVCDelegate?
@@ -29,6 +30,7 @@ class UserInfoVC: GFDataLoadingVC {
         super.viewDidLoad()
         configureViewController()
         configureScrollView()
+        configureAddFavButton()
         layoutUI()
         getUserInfo()
     }
@@ -54,16 +56,16 @@ class UserInfoVC: GFDataLoadingVC {
     }
     
     func getUserInfo() {
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let user):
-                DispatchQueue.main.async { self.configureUIElements(with: user) }
-            
-            case .failure(let error):
-                self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "OK")
-                break
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                configureUIElements(with: user)
+            } catch {
+                if let gfError = error as? GFError {
+                    presentGFAlert(title: "Bad stuff happened", message: gfError.rawValue, buttonTitle: "OK")
+                } else {
+                    presentDefaultError()
+                }
             }
         }
     }
@@ -72,14 +74,19 @@ class UserInfoVC: GFDataLoadingVC {
         self.add(childVC: GFRepoItemVC(user: user, delegate: self), to: self.itemViewOne)
         self.add(childVC: GFFollowerItemVC(user: user, delegate: self), to: self.itemViewTwo)
         self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+
         self.dateLabel.text = "GitHub since \(user.createdAt.convertToMonthYearFormat())"
+    }
+    
+    func configureAddFavButton() {
+        addUserToFavButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
     }
     
     func layoutUI() {
         let padding: CGFloat = 20
         let itemHeight: CGFloat = 140
         
-        itemViews = [headerView, itemViewOne, itemViewTwo, dateLabel]
+        itemViews = [headerView, itemViewOne, itemViewTwo, addUserToFavButton, dateLabel]
         for itemView in itemViews {
             contentView.addSubview(itemView)
             itemView.translatesAutoresizingMaskIntoConstraints = false
@@ -103,7 +110,10 @@ class UserInfoVC: GFDataLoadingVC {
             itemViewTwo.topAnchor.constraint(equalTo: itemViewOne.bottomAnchor, constant: padding),
             itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),
             
-            dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
+            addUserToFavButton.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
+            addUserToFavButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            dateLabel.topAnchor.constraint(equalTo: addUserToFavButton.bottomAnchor, constant: padding),
             dateLabel.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
@@ -116,28 +126,64 @@ class UserInfoVC: GFDataLoadingVC {
         childVC.didMove(toParent: self)
     }
     
+    func addUserToFavourites(user: User) {
+        let favourite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+        
+        PersistenceManager.updateWith(favourite: favourite, actionType: .add) { [weak self] error in
+            guard let self else { return }
+            guard let error else {
+                // If error is nil, do this...
+                DispatchQueue.main.async {
+                    self.presentGFAlert(title: "Success!", message: "You have successfully favourited this user. 🥳", buttonTitle: "Hooray!")
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.presentGFAlert(title: "User already in favourites", message: error.rawValue, buttonTitle: "Hehe")
+            }
+        }
+    }
+    
     @objc func dismissVC() {
         dismiss(animated: true)
     }
-
+    
+    @objc func addButtonTapped() {
+        showLoadingView()
+        
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                addUserToFavourites(user: user)
+                dismissLoadingView()
+            } catch {
+                if let gfError = error as? GFError {
+                    presentGFAlert(title: "Bad stuff happened", message: gfError.rawValue, buttonTitle: "OK")
+                } else {
+                    presentDefaultError()
+                }
+                
+                dismissLoadingView()
+            }
+        }
+    }
 }
 
-extension UserInfoVC: GFRepoItemVCDelegate {
+extension UserInfoVC: GFRepoItemVCDelegate, GFFollowerItemVCDelegate {
     func didTapGitHubProfile(for user: User) {
         // Show Safari view controller
         guard let url = URL(string: user.htmlUrl) else {
-            presentGFAlertOnMainThread(title: "Invalid URL", message: "The url attached to this user is invalid.", buttonTitle: "OK")
+            presentGFAlert(title: "Invalid URL", message: "The url attached to this user is invalid.", buttonTitle: "OK")
             return
         }
         
         presentSafariVC(with: url)
     }
-}
-
-extension UserInfoVC: GFFollowerItemVCDelegate {
+    
     func didTapGetFollowers(for user: User) {
         guard user.followers != 0 else {
-            presentGFAlertOnMainThread(title: "No Followers", message: "This user has no followers. What a shame 😞", buttonTitle: "So sad")
+            presentGFAlert(title: "No Followers", message: "This user has no followers. What a shame 😞", buttonTitle: "So sad")
             return
         }
         // dissmissVC

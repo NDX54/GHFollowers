@@ -77,35 +77,50 @@ class FollowerListVC: GFDataLoadingVC {
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
     
+    // You can either restructure this code to conform to async/await or wrap asynchronous tasks with Task {}.
     func getFollowers(username: String, page: Int) {
         showLoadingView()
         isLoadingMoreFollowers = true
-        NetworkManager.shared.getFollowers(for: username, page: page) { [weak self] result in
-            // [weak self] is a capture list.
-            // Initially, the NetworkManager has a strong reference to the FollowerListVC.
-            // This can make a memory leak, so we use the capture list to make self weak
-            // and have a weak reference to the VC.
-            guard let self = self else { return }
-            self.dismissLoadingView()
-            // Since this code is in a closure, this is running in a background thread.
-            // According to a WWDC 2019 video, we can say that self.updateData() is safe to call in a bg thread.
-            switch result {
-            case .success(let followers):
-                if followers.count < 100 { self.hasMoreFollowers = false }
-                self.followers.append(contentsOf: followers) // What happens here is that we add a hundred more followers to the previous array of hundred followers.
-                
-                if self.followers.isEmpty {
-                    let message = "This user doesn't have any followers. Go follow them 😃."
-                    DispatchQueue.main.async { self.showEmptyStateView(with: message, in: self.view) }
-                    return
+        
+        Task {
+            do {
+                let followers = try await NetworkManager.shared.getFollowers(for: username, page: page)
+                updateUI(with: followers)
+                dismissLoadingView()
+                isLoadingMoreFollowers = false
+            } catch {
+                // Handle errors
+                if let gfError = error as? GFError {
+                    presentGFAlert(title: "Bad stuff happened", message: gfError.rawValue, buttonTitle: "OK")
+                } else {
+                    presentDefaultError()
                 }
-                self.updateData(on: self.followers)
-            case .failure(let error):
-                self.presentGFAlertOnMainThread(title: "Bad stuff happened", message: error.rawValue, buttonTitle: "OK")
+                
+                isLoadingMoreFollowers = false
+                dismissLoadingView()
             }
-            
-            self.isLoadingMoreFollowers = false
+            //            This only presents a default error. Nothing specific.
+            //            guard let followers = try? await NetworkManager.shared.getFollowers(for: username, page: page) else {
+            //                presentDefaultError()
+            //                dismissLoadingView()
+            //                return
+            //            }
+            //
+            //            updateUI(with: followers)
+            //            dismissLoadingView()
         }
+    }
+    
+    func updateUI(with newFollowers: [Follower]) {
+        if newFollowers.count < 100 { self.hasMoreFollowers = false }
+        followers.append(contentsOf: newFollowers) // What happens here is that we add a hundred more followers to the previous array of hundred followers.
+        
+        if followers.isEmpty {
+            let message = "This user doesn't have any followers. Go follow them 😃."
+            DispatchQueue.main.async { self.showEmptyStateView(with: message, in: self.view) }
+            return
+        }
+        updateData(on: followers)
     }
     
     func configureDataSource() {
@@ -135,29 +150,38 @@ class FollowerListVC: GFDataLoadingVC {
     @objc func addButtonTapped() {
         showLoadingView()
         
-        NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
-            guard let self = self else { return }
-            self.dismissLoadingView()
-            
-            switch result {
-            case .success(let user):
-                let favourite = Follower(login: user.login, avatarUrl: user.avatarUrl)
-                
-                PersistenceManager.updateWith(favourite: favourite, actionType: .add) { [weak self] error in
-                    guard let self = self else { return }
-                    guard let error = error else {
-                        // If error is nil, do this...
-                        self.presentGFAlertOnMainThread(title: "Success!", message: "You have successfully favourited this user. 🥳", buttonTitle: "Hooray!")
-                        return
-                    }
-                    
-                    self.presentGFAlertOnMainThread(title: "User already in favourites", message: error.rawValue, buttonTitle: "Hehe")
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUserInfo(for: username)
+                addUserToFavourites(user: user)
+                dismissLoadingView()
+            } catch {
+                if let gfError = error as? GFError {
+                    presentGFAlert(title: "Bad stuff happened", message: gfError.rawValue, buttonTitle: "OK")
+                } else {
+                    presentDefaultError()
                 }
                 
-                break
-            case .failure(let error):
-                self.presentGFAlertOnMainThread(title: "Something went wrong", message: error.rawValue, buttonTitle: "OK")
-                break
+                dismissLoadingView()
+            }
+        }
+    }
+    
+    func addUserToFavourites(user: User) {
+        let favourite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+        
+        PersistenceManager.updateWith(favourite: favourite, actionType: .add) { [weak self] error in
+            guard let self else { return }
+            guard let error else {
+                // If error is nil, do this...
+                DispatchQueue.main.async {
+                    self.presentGFAlert(title: "Success!", message: "You have successfully favourited this user. 🥳", buttonTitle: "Hooray!")
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.presentGFAlert(title: "User already in favourites", message: error.rawValue, buttonTitle: "Hehe")
             }
         }
     }
@@ -213,12 +237,6 @@ extension FollowerListVC: UISearchResultsUpdating {
         filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased()) }
         updateData(on: filteredFollowers)
     }
-    
-    // When the cancel button is tapped, we are updating the collection view using the original data and not the search data.
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        isSearching = false
-//        updateData(on: followers)
-//    }
 }
 
 // The FollowerListVC is waiting for somebody (a view controller) to invoke the specified functions below.
@@ -230,6 +248,7 @@ extension FollowerListVC: UserInfoVCDelegate {
         self.username = username
         title = username
         page = 1
+        
         followers.removeAll()
         filteredFollowers.removeAll()
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)

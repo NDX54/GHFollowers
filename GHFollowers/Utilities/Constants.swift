@@ -8,6 +8,7 @@
 import UIKit
 
 enum SFSymbols {
+    
     static let location = UIImage(systemName: "mappin.and.ellipse")
     static let repos = UIImage(systemName:"folder")
     static let gist = UIImage(systemName:"text.alignleft")
@@ -16,12 +17,14 @@ enum SFSymbols {
 }
 
 enum Images {
+    
     static let placeholder = UIImage(named: "avatar-placeholder")
     static let emptyStateLogo = UIImage(named: "empty-state-logo")
     static let ghlogo = UIImage(named: "gh-logo")
 }
 
 enum ScreenSize {
+    
     static let width        = UIScreen.main.bounds.size.width
     static let height       = UIScreen.main.bounds.size.height
     static let maxLength    = max(ScreenSize.width, ScreenSize.height)
@@ -30,6 +33,7 @@ enum ScreenSize {
 
 // Use this SPARINGLY. Use it for the last 5% of tweaking auto layout stuff.
 enum DeviceTypes {
+    
     static let idiom                    = UIDevice.current.userInterfaceIdiom
     static let nativeScale              = UIScreen.main.nativeScale
     static let scale                    = UIScreen.main.scale
