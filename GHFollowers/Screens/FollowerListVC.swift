@@ -197,7 +197,7 @@ extension FollowerListVC: UICollectionViewDelegate {
         
         if offsetY > contentHeight - height {
             // If hasMoreFollowers returns false, none of the code below the guard statement will be executed.
-            guard hasMoreFollowers, !isLoadingMoreFollowers else { return }
+            guard hasMoreFollowers, !isLoadingMoreFollowers, !isSearching else { return }
             page += 1
             getFollowers(username: username, page: page)
         }
