@@ -24,6 +24,22 @@ class FavouritesListVC: GFDataLoadingVC {
         getFavourites()
     }
     
+    // This function is waiting for the moment to execute code when we tell it that the content unavailable view needs updating.
+    override func updateContentUnavailableConfiguration(using state: UIContentUnavailableConfigurationState) {
+        super.updateContentUnavailableConfiguration(using: state)
+        
+        if favourites.isEmpty {
+            var config = UIContentUnavailableConfiguration.empty()
+            config.image = .init(systemName: "star")
+            config.text = "No Favourites"
+            config.secondaryText = "Add a favourite on the follower list screen"
+            contentUnavailableConfiguration = config
+        } else {
+            contentUnavailableConfiguration = nil
+        }
+        
+    }
+    
     func configureViewController() {
         // We are in a different tab, so we have to set up the navigation controller here.
         view.backgroundColor = .systemBackground
@@ -63,15 +79,14 @@ class FavouritesListVC: GFDataLoadingVC {
     }
     
     func updateUI(with favourites: [Follower]) {
-        if favourites.isEmpty {
-            showEmptyStateView(with: "No Favourites?\nAdd one on the follower screen.", in: self.view)
-        } else {
-            DispatchQueue.main.async {
-                self.favourites = favourites
-                self.tableView.reloadData()
-                self.view.bringSubviewToFront(self.tableView)
-            }
+        self.favourites = favourites
+        setNeedsUpdateContentUnavailableConfiguration()
+        DispatchQueue.main.async {
+            self.favourites = favourites
+            self.tableView.reloadData()
+            self.view.bringSubviewToFront(self.tableView)
         }
+        
     }
 }
 
@@ -108,9 +123,7 @@ extension FavouritesListVC: UITableViewDataSource, UITableViewDelegate {
             guard let error else {
                 self.favourites.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .left)
-                if favourites.isEmpty {
-                    showEmptyStateView(with: "No Favourites?\nAdd one on the follower screen.", in: self.view)
-                }
+                setNeedsUpdateContentUnavailableConfiguration()
                 return
             }
             

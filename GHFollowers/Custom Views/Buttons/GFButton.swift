@@ -50,3 +50,8 @@ class GFButton: UIButton {
     }
     
 }
+
+
+#Preview {
+    GFButton(color: .blue, title: "Test Button", systemImageName: "pencil")
+}

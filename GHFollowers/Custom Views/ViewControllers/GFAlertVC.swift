@@ -98,3 +98,9 @@ class GFAlertVC: UIViewController {
     }
 
 }
+
+#Preview {
+    
+    let alertVC = GFAlertVC(title: "Error", message: "An error occurred near your mum's house. Shall I do her?", buttonTitle: "Yes")
+    return alertVC
+}

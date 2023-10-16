@@ -116,3 +116,8 @@ extension SearchVC: UITextFieldDelegate {
         return true
     }
 }
+
+#Preview {
+    let searchVCPreview = SearchVC()
+    return searchVCPreview
+}
